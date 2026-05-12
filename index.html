@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vehicle Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🚗</span>
+        <div>
+          <h1>VehicleMS</h1>
+          <p>Vehicle Management System</p>
+        </div>
+      </div>
+      <div class="fuel-badge">
+        <span class="fuel-label">⛽ Current Fuel Price</span>
+        <span class="fuel-value" id="header-fuel-price">₹102.50<small>/L</small></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── MAIN ───────────────────────────────────────────── -->
+  <main>
+
+    <!-- Stats Row -->
+    <section class="stats-row" id="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon">🚘</div>
+        <div class="stat-info">
+          <span class="stat-num" id="stat-total">3</span>
+          <span class="stat-label">Total Vehicles</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⛽</div>
+        <div class="stat-info">
+          <span class="stat-num" id="stat-fuel">₹102.50</span>
+          <span class="stat-label">Static Fuel Price</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-info">
+          <span class="stat-num" id="stat-total-cost">₹0</span>
+          <span class="stat-label">Total Refill Cost</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🛣️</div>
+        <div class="stat-info">
+          <span class="stat-num" id="stat-total-range">0 km</span>
+          <span class="stat-label">Combined Range</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fuel Price Control -->
+    <section class="fuel-control-section">
+      <div class="section-header">
+        <h2>⚡ Static Fuel Price Control</h2>
+        <p>This price is shared across <strong>all vehicles</strong> (static variable)</p>
+      </div>
+      <div class="fuel-control">
+        <div class="fuel-input-group">
+          <label for="fuel-input">New Fuel Price (₹/L)</label>
+          <div class="input-row">
+            <span class="currency-symbol">₹</span>
+            <input type="number" id="fuel-input" min="1" max="500" step="0.01" placeholder="e.g. 110.75"/>
+            <button id="update-fuel-btn" onclick="updateFuelPrice()">Update Price</button>
+          </div>
+        </div>
+        <div class="fuel-history" id="fuel-history">
+          <p class="history-title">📋 Price History</p>
+          <div id="history-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add Vehicle -->
+    <section class="add-vehicle-section">
+      <div class="section-header">
+        <h2>➕ Add New Vehicle</h2>
+        <p>Create a vehicle using the parameterised constructor</p>
+      </div>
+      <form class="add-form" onsubmit="addVehicle(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="v-id">Vehicle ID</label>
+            <input type="text" id="v-id" placeholder="MH-12-AB-1234" required/>
+          </div>
+          <div class="form-group">
+            <label for="v-owner">Owner Name</label>
+            <input type="text" id="v-owner" placeholder="e.g. Ravi Kumar" required/>
+          </div>
+          <div class="form-group">
+            <label for="v-type">Vehicle Type</label>
+            <select id="v-type">
+              <option value="Car">🚗 Car</option>
+              <option value="Bike">🏍️ Bike</option>
+              <option value="Truck">🚛 Truck</option>
+              <option value="Bus">🚌 Bus</option>
+              <option value="SUV">🚙 SUV</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="v-fuel">Fuel Type</label>
+            <select id="v-fuel">
+              <option value="Petrol">⛽ Petrol</option>
+              <option value="Diesel">🛢️ Diesel</option>
+              <option value="Electric">⚡ Electric</option>
+              <option value="CNG">🌿 CNG</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="v-tank">Tank Capacity (L)</label>
+            <input type="number" id="v-tank" min="1" max="500" placeholder="e.g. 45" required/>
+          </div>
+          <div class="form-group">
+            <label for="v-mileage">Mileage (km/L)</label>
+            <input type="number" id="v-mileage" min="1" max="200" placeholder="e.g. 15" required/>
+          </div>
+        </div>
+        <button type="submit" class="add-btn">🚀 Add Vehicle</button>
+      </form>
+    </section>
+
+    <!-- Vehicle Cards -->
+    <section class="vehicles-section">
+      <div class="section-header">
+        <h2>🚘 Fleet Overview</h2>
+        <p>All vehicles share the static fuel price above</p>
+      </div>
+      <div class="vehicle-grid" id="vehicle-grid">
+        <!-- Cards injected by JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── TOAST ───────────────────────────────────────────── -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
